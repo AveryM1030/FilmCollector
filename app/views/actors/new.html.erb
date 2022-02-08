@@ -10,3 +10,9 @@
 	</div>
 	<input type="submit" value="Create">
 </form>
+<% if flash[:errors] %>
+	<% flash[:errors].each do |e| %>
+	<div><%= e %></div>
+	<% end %>
+<% end %>
+	
