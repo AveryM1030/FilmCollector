@@ -1,5 +1,5 @@
 class ActorsController < ApplicationController
-	# index method gets called when the actors URl is requested.
+	# index method gets called when the actors URL is requested.
 	# index method gets mapped to the actors index.html.erb.
 	def index
 		# call all method on Actor model class.
