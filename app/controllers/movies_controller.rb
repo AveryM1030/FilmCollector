@@ -61,6 +61,69 @@ def show
 	@actors = Movie.find(params[:id]).actors
 	end
 
+	# edit method gets called when the movie/:id/edit URL is requested
+	# edit method is mapped to the movie edit.html.erb
+	def edit
+		# call find method on Movie model class giving it the id sent
+		# in the request
+		# the find method selects all of the data in the actor table where
+		# the id is equal to the id sent in the request
+		# the selected data will be returned as an object
+		# the object will be stored in a instance variable that will be
+		# available to the edit.html.erb
+		@movie = Movie.find(params[:id])
+	end
+
+	# update method gets called when the Update button is pushed on the 
+	# movie edit.html.erb
+	def update
+		# call find method on Movie model class giving it the id sent in the 
+		# request
+		# find method selects all of the data in the actor table where
+		# the id is equal to the id sent in the request
+		# the seleted data will be returned as an object
+		# the object will be stored in a variable
+		movie = Movie.find(params[:id])
+		# call update methon on Movie object giving it the title, duration, rating, 
+		# and release date parameters input in the movie edit.html.erb
+		# update method updates that data in the movie table use the parameter
+		if movie.update(movie_params)
+			# if the update method succeeds, request the movie URL which
+			# will render the movies index.html.erb in the broswer
+			redirect_to "/movies"
+		else
+			# if the update method fails, get the full messages associated
+			# with the errors
+			# store them in a Rails flash object named errors so that 
+			# the full messages may be displayed in the requested URL
+			flash[:errors] = movie.errors.full_messages
+			# request the movies/:id/edit URl which will render the movies
+			# edit.html.erb
+			redirect_to "/movies/#{movie.id}/edit"
+		end
+	end
+
+	# delete method gets called when the movies/:id/delete URL is requested
+	# delete method is mapped to the movies delete.html.erb
+	def delete
+		# call find method on Movie model class giving it the id sent
+		# in the request
+		# the find method selects all of the data in the movie table where
+		# the id is equal to the id sent in the request
+		# the selected data will be returned as an object
+		# the object will be stored in a instance variable that will be
+		# available to the delete.html.erb
+		@movie = Movie.find(params[:id])
+	end
+
+	# destroy method gets called when the Delete button is pushed on the 
+	# movie delete.html.erb
+	def destroy
+		movie = Movie.find(params[:id])
+		movie.destroy
+		redirect_to "/movies"
+	end
+
 	private
 	def movie_params
 		# params is a Rails onject that gets the specified request
